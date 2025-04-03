@@ -12,13 +12,15 @@ spring:
     properties:
       hibernate:
         format_sql: true
-        naming:
-          physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
 
+  sql:
+    init:
+      mode: always
 
-springdoc:
-  swagger-ui:
-    path: /swagger-ui.html
-  api-docs:
-    path: /v3/api-docs
-  packages-to-scan: com.welcommu.moduleapi
+  properties:
+    hibernate:
+      format_sql: true
+
+logging:
+  level:
+    org.springframework.security: DEBUG

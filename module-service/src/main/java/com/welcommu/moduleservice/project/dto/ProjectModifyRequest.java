@@ -1,7 +1,7 @@
 package com.welcommu.moduleservice.project.dto;
 
 import com.welcommu.moduledomain.project.Project;
-import com.welcommu.moduledomain.project.ProjectUser;
+import com.welcommu.moduledomain.projectUser.ProjectUser;
 import com.welcommu.moduledomain.user.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -15,21 +15,20 @@ import java.util.function.Function;
 @Getter
 @Builder
 @AllArgsConstructor
-public class ProjectUpdateRequest {
+public class ProjectModifyRequest {
 
     private String name;
     private String description;
     private LocalDate startDate;
     private LocalDate endDate;
 
-    // 참여자 정보
     private List<ProjectUserRoleRequest> clientManagers;
     private List<ProjectUserRoleRequest> clientUsers;
     private List<ProjectUserRoleRequest> devManagers;
     private List<ProjectUserRoleRequest> devUsers;
 
 
-    public void updateProject(Project project) {
+    public void modifyProject(Project project) {
         project.setName(this.name);
         project.setDescription(this.description);
         project.setStartDate(this.startDate);
@@ -37,7 +36,6 @@ public class ProjectUpdateRequest {
         project.setModifiedAt(LocalDateTime.now());
     }
 
-    // 참여자 변환
     public List<ProjectUser> toProjectUsers(Project project, Function<Long, User> userResolver) {
         List<ProjectUser> result = new java.util.ArrayList<>();
 
@@ -53,7 +51,6 @@ public class ProjectUpdateRequest {
         for (ProjectUserRoleRequest dto : devUsers) {
             result.add(dto.toEntity(project, userResolver.apply(dto.getUserId())));
         }
-
         return result;
     }
 }
